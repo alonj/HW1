@@ -95,6 +95,7 @@ void KMedoids::setRandomSeeds()
     {
         _points[seedIndexes[i]].setCluster((int)i);
         Cluster cluster((int)i, _points[seedIndexes[i]]);
+        cluster.addPoint(_points[seedIndexes[i]].getID());
         _clusters.push_back( cluster );
     }
 }
