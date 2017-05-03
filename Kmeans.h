@@ -23,6 +23,7 @@ public:
     KMeans(unsigned K, unsigned maxIterations): _K(K), _maxIterations(maxIterations){ }
     void run( const std::vector<Point> &points);
     void print();
+    double calculateSSE();
 
 private:
     void setRandomSeeds();

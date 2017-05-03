@@ -17,32 +17,26 @@ void Tests::testKMeans(unsigned K, unsigned max_iterations, const std::vector<Po
 {
     KMeans kmeans(K, max_iterations);
     kmeans.run(points);
-//    kmeans.print();
+    kmeans.print();
 }
 
-/*
 void Tests::testKMedoids(unsigned K, unsigned max_iterations, const std::vector<Point>& points)
 {
     KMedoids kmedoids(K, max_iterations);
     kmedoids.run(points);
     kmedoids.print();
 }
-*/
 
-/*
 void Tests::testKMeansSSE(unsigned K, unsigned max_iterations, const std::vector<Point>& points)
 {
     KMeans kmeans(K, max_iterations);
     kmeans.run(points);
     cout << kmeans.calculateSSE() << endl;
 }
-*/
 
-/*
 void Tests::testKMedoidsSSE(unsigned K, unsigned max_iterations, const std::vector<Point>& points)
 {
     KMedoids kmedoids(K, max_iterations);
     kmedoids.run(points);
     cout << kmedoids.calculateSSE() << endl;
 }
-*/

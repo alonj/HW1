@@ -18,7 +18,7 @@ private:
     std::vector<double> _values;
     std::string _name;
 public:
-    static const int _notAssignedToCluster=-1;
+    static const int _notAssignedToCluster;
 
 public:
     Point(size_t id_point, const std::vector<double>& values, const std::string& name = "");
@@ -37,14 +37,19 @@ public:
 
     void setValue(double value, size_t dim) { _values[dim]=value; }
 
-    double euclideanDistance( const Point &other_point ) const;
+    //double euclideanDistance( const Point &other_point ) const;
 
-    void print() const;
+    static double staticEucDist(const Point &this_point,const Point &other_point);
+
+    //void print() const;
 
     void setName( const std::string& name){ _name=name; }
 
     Point operator +(Point other);
     Point operator /(double denom);
+//    Point operator =(Point other); //operator caused segmentation fault. SAD!
+    friend std::ostream &operator<<(std::ostream &os, const Point &point);
+
 
 };
 

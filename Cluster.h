@@ -17,7 +17,7 @@ private:
     std::vector<size_t> _points;
 
 public:
-    Cluster(int idCluster, const Point& prototype );
+    Cluster(int idCluster, const Point& prototype);
 
     void addPoint( size_t pointID );
 
@@ -25,9 +25,15 @@ public:
 
     void updatePrototype( const std::vector<Point>& allPoints );
 
-    double getDistanceToPrototype( const Point& point ) const {return point.euclideanDistance(_prototype); };
+    void updateMedoid( const std::vector<Point>& allPoints );
+
+    double getDistanceToPrototype( const Point& point ) const ;
 
     void print( const std::vector<Point>& allPoints ) const;
+
+    std::vector<size_t>::iterator find(size_t pointID);
+
+    double SSE(const std::vector<Point>& allPoints);
 };
 
 #endif
