@@ -72,14 +72,16 @@ void Cluster::updatePrototype(const std::vector<Point> &allPoints)
 
 void Cluster::updateMedoid(const std::vector<Point> &allPoints){
     double minDist=std::numeric_limits<double>::max();
+    double sum(0.0);
     _prototype.setName("");
     for(vector<size_t>::size_type i = 0; i < _points.size(); i++)
     {
-        for(vector<size_t>::size_type j = i; j<_points.size(); j++) {
-            if (minDist>Point::staticEucDist(allPoints[_points[i]],allPoints[_points[j]])) {
-                minDist = Point::staticEucDist(allPoints[_points[i]],allPoints[_points[j]]);
-                _prototype=allPoints[_points[i]];
-            }
+        for(vector<size_t>::size_type j = i; j<_points.size(); j++)
+            sum+=Point::staticEucDist(allPoints[_points[i]],allPoints[_points[j]]);
+        if(sum<minDist)
+        {
+            sum=minDist;
+            _prototype=allPoints[_points[i]];
         }
     }
 }
