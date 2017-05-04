@@ -16,7 +16,7 @@ const int Point::_notAssignedToCluster=-1;
 Point::Point(size_t id_point, const std::vector<double> &values, const std::string &name):_idPoint(id_point),
                                                                                           _values(values),
                                                                                           _name(name){
-                                                                                          _idCluster=_notAssignedToCluster;}
+    _idCluster=_notAssignedToCluster;}
 
 /*
 double Point::euclideanDistance(const Point &other_point)
@@ -31,6 +31,7 @@ double Point::euclideanDistance(const Point &other_point)
 }
 */
 
+//calculate euclidean distance between points.
 double Point::staticEucDist(const Point &this_point,const Point &other_point)
 { // implicit assumption that both points are of the same dimension - since we're checking points in similar vectors
     double sum(0.0);

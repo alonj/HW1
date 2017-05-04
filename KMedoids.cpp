@@ -8,7 +8,7 @@
 using std::cout;
 using std::vector;
 
-
+//find id of a point which is nearest to the center of a cluster
 size_t KMedoids::getIDNearestCenter(const Point& point)
 {
     size_t idClusterCenter = 0;
@@ -26,6 +26,9 @@ size_t KMedoids::getIDNearestCenter(const Point& point)
     return idClusterCenter;
 }
 
+//main function to run K-Medoids algorithm. sets seeds for clusters,
+//attributes points to clusters, updates center point of a cluster, and repeat
+//for K iterations.
 void KMedoids::run( const vector <Point> &points ) {
 
     if( _K > points.size() )
@@ -51,6 +54,7 @@ void KMedoids::run( const vector <Point> &points ) {
     }
 }
 
+//print all clusters resulted in a KMedoids run
 void KMedoids::print() // prints elements of clusters
 {
     for( std::vector<Cluster>::size_type i = 0; i < _K; i++ )
@@ -58,6 +62,7 @@ void KMedoids::print() // prints elements of clusters
 
 }
 
+//attributes points to cluster by looking at smallest distances from its center
 bool KMedoids::attributePoints()
 {
     bool done = true;
@@ -80,6 +85,7 @@ bool KMedoids::attributePoints()
     return done;
 }
 
+//seeds the initial clusters into a cluster vector (randomized)
 void KMedoids::setRandomSeeds()
 {
     vector<vector<Point>::size_type> seedIndexes;
@@ -100,6 +106,7 @@ void KMedoids::setRandomSeeds()
     }
 }
 
+//calculates SSE for all resulting clusters from this algorithm
 double KMedoids::calculateSSE() // calculates sum of SSE for all clusters
 {
     double sum(0.0);
