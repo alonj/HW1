@@ -12,13 +12,13 @@ using std::endl;
 
 void Cluster::addPoint(size_t pointID)
 {
-    bool exists = 0;
+/*    bool exists = 0;
     for(vector<size_t>::size_type i = 0; i < _points.size(); i++)
     {
         if(_points[i] == pointID)
             exists = 1;
     }
-    if(!exists)
+    if(!exists)*/
         _points.push_back(pointID);
 }
 
@@ -33,7 +33,13 @@ bool Cluster::removePoint(size_t pointID)
             return true;
         }
     }*/
-    this->_points.erase(this->find(pointID));
+    vector<size_t>::iterator i = find(pointID);
+    if(i!=_points.end())
+    {
+        _points.erase(i);
+        return true;
+    }
+    //this->_points.erase(this->find(pointID));
     return false;
 }
 
@@ -42,16 +48,17 @@ void Cluster::print(const vector<Point>& allPoints) const
     cout << "Cluster " << _idCluster + 1 << endl;
     for(vector<Point>::size_type j = 0; j < _points.size(); j++)
     {
-        cout << "Point " << allPoints[_points[j]].getID() + 1 << ": ";
+        cout << "Point " << allPoints[_points[j]].getID()+1 << ": ";
 //        allPoints[_points[j]].print();
         cout<<allPoints[_points[j]];
     }
     cout << "Cluster prototype: " << _prototype;
 }
 
-Cluster::Cluster(int idCluster, const Point &point):_idCluster(idCluster),
-                                                        _prototype(point){
-    _points.push_back(point.getID());
+Cluster::Cluster(int idCluster, const Point &prototype):_idCluster(idCluster),
+                                                        _prototype(prototype)
+{
+    _points.push_back(_prototype.getID());
 }
 
 
@@ -73,19 +80,21 @@ void Cluster::updatePrototype(const std::vector<Point> &allPoints)
 void Cluster::updateMedoid(const std::vector<Point> &allPoints){
     double minDist=std::numeric_limits<double>::max();
     double sum(0.0);
-    _prototype.setName("");
     for(vector<size_t>::size_type i = 0; i < _points.size(); i++)
     {
-        for(vector<size_t>::size_type j = i; j<_points.size(); j++)
-            sum+=Point::staticEucDist(allPoints[_points[i]],allPoints[_points[j]]);
+        sum=0;
+        for(vector<size_t>::size_type j = 0; j<_points.size(); j++) {
+            if(i==j) continue;
+            sum += Point::staticEucDist(allPoints[_points[i]], allPoints[_points[j]]);
+        }
         if(sum<minDist)
         {
-            sum=minDist;
+            minDist=sum;
             _prototype=allPoints[_points[i]];
         }
+
     }
 }
-
 
 double Cluster::getDistanceToPrototype(const Point &point) const
 {

@@ -14,7 +14,7 @@ size_t KMedoids::getIDNearestCenter(const Point& point)
     size_t idClusterCenter = 0;
     double min_dist = _clusters[idClusterCenter].getDistanceToPrototype(point);
 
-    for(unsigned i = 1; i < _K; i++)
+    for(size_t i = 1; i < _K; i++)
     {
         double dist = _clusters[i].getDistanceToPrototype(point);
         if(dist < min_dist)
@@ -40,7 +40,7 @@ void KMedoids::run( const vector <Point> &points ) {
     while( (!done) && (iter<= _maxIterations) )
     {
         // associates each point to the nearest medoid
-        done = attributePoints();
+        done = KMedoids::attributePoints();
 
         // recalculating the center of each medoid
         for( std::vector<Cluster>::size_type i = 0; i < _K; i++)
@@ -89,7 +89,7 @@ void KMedoids::setRandomSeeds()
         vector<Point>::size_type index_point = SeedsGenerator::getRandom( 0, _points.size() );
         //This is a standard library function that looks for a value inside a vector, if the values is not found - an iterator to the end of vector is returned
         if ( std::find( seedIndexes.begin(), seedIndexes.end(), index_point) == seedIndexes.end())
-            seedIndexes.insert(seedIndexes.begin(),index_point);
+            seedIndexes.push_back(index_point);
     }
     for (vector<vector<Point>::size_type>::size_type i=0; i< seedIndexes.size(); i++ )
     {
@@ -103,7 +103,7 @@ void KMedoids::setRandomSeeds()
 double KMedoids::calculateSSE() // calculates sum of SSE for all clusters
 {
     double sum(0.0);
-    for(std::vector<Cluster>::size_type i=0; i< _K; i++)
+    for(std::vector<Cluster>::size_type i=0; i< _clusters.size(); i++)
         sum+=_clusters[i].SSE(_points);
     return sum;
 }
